@@ -4,26 +4,23 @@ __v0_devtools.tsx
 __v0_jsx-dev-runtime.ts
 .snowflake/
 .v0-trash/
-.vercel/
+
+# Dependencies and package-manager caches
+node_modules/
+.pnpm-store/
+
+# Next.js output
+.next/
+out/
+dist/
 
 # Environment variables
-.env*.local
-
-# Common ignores
-node_modules
-.next/
-.DS_Store
-
-cat > .gitignore <<'EOF'
-node_modules
-.next
-out
-dist
 .env
 .env.local
 .env.*.local
-.vercel
-.DS_Store
+.vercel/
+
+# Local logs and OS files
 dev-server*.log
 dev-server*.err.log
-EOF
+.DS_Store
