@@ -10,7 +10,7 @@ import {
 } from 'react'
 import {
   DEFAULT_LANGUAGE,
-  LANGUAGES,
+  LANGUAGE_OPTIONS,
   type LanguageCode,
   translateText,
 } from '@/lib/i18n'
@@ -25,6 +25,7 @@ const LanguageContext = createContext<LanguageContextValue | null>(null)
 
 const LANGUAGE_STORAGE_KEY = 'oigatjip-language'
 const textOriginals = new WeakMap<Text, string>()
+const attrOriginals = new WeakMap<Element, Partial<Record<string, string>>>()
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<LanguageCode>(DEFAULT_LANGUAGE)
@@ -66,6 +67,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   return (
     <LanguageContext.Provider value={value}>
       {children}
+      <TranslationApplier language={language} />
     </LanguageContext.Provider>
   )
 }
@@ -81,7 +83,7 @@ export function useLanguage() {
 function TranslationApplier({ language }: { language: LanguageCode }) {
   useEffect(() => {
     const htmlLang =
-      LANGUAGES.find((item) => item.code === language)?.htmlLang ?? 'ko'
+      LANGUAGE_OPTIONS.find((item) => item.value === language)?.htmlLang ?? 'ko'
     document.documentElement.lang = htmlLang
 
     const apply = () => applyTranslations(document.body, language)
@@ -140,9 +142,9 @@ function translateAttributes(root: HTMLElement, language: LanguageCode) {
     attrs.forEach((attr) => {
       const current = element.getAttribute(attr)
       if (!current) return
-      const originalKey = `data-i18n-original-${attr}`
-      const original = element.getAttribute(originalKey) ?? current
-      element.setAttribute(originalKey, original)
+      const stored = attrOriginals.get(element) ?? {}
+      const original = stored[attr] ?? current
+      attrOriginals.set(element, { ...stored, [attr]: original })
       const translated = translateText(original, language)
       if (current !== translated) {
         element.setAttribute(attr, translated)
@@ -173,5 +175,5 @@ function shouldSkip(element: Element) {
 }
 
 function isLanguageCode(value: string | null): value is LanguageCode {
-  return LANGUAGES.some((item) => item.code === value)
+  return LANGUAGE_OPTIONS.some((item) => item.value === value)
 }

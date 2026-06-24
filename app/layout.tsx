@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from 'next'
 import { SiteHeader } from '@/components/oigatjip/site-header'
 import { MobileTabBar } from '@/components/oigatjip/mobile-tab-bar'
 import { LanguageProvider } from '@/components/oigatjip/language-provider'
-import { LanguageScript } from '@/components/oigatjip/language-script'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -37,7 +36,6 @@ export default function RootLayout({
           <SiteHeader />
           <main className="pb-20 lg:pb-0">{children}</main>
           <MobileTabBar />
-          <LanguageScript />
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </LanguageProvider>
       </body>

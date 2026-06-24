@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { ChevronDown, Globe, Menu, X } from 'lucide-react'
 import { Logo } from './logo'
 import { cn } from '@/lib/utils'
-import { LANGUAGES } from '@/lib/i18n'
+import { LANGUAGE_OPTIONS } from '@/lib/i18n'
 import { useLanguage } from './language-provider'
 
 const NAV = [
@@ -55,8 +55,8 @@ export function SiteHeader() {
               aria-label="언어 선택"
               data-language-select
             >
-              {LANGUAGES.map((item) => (
-                <option key={item.code} value={item.code}>
+              {LANGUAGE_OPTIONS.map((item) => (
+                <option key={item.value} value={item.value} data-i18n-skip>
                   {item.label}
                 </option>
               ))}

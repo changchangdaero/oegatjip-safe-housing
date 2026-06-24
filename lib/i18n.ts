@@ -1,12 +1,12 @@
-export const LANGUAGES = [
-  { code: 'ko', label: '한국어', htmlLang: 'ko' },
-  { code: 'en', label: '영어', htmlLang: 'en' },
-  { code: 'zh', label: '중국어', htmlLang: 'zh-CN' },
-  { code: 'tw', label: '타이완어', htmlLang: 'zh-TW' },
-  { code: 'ja', label: '일본어', htmlLang: 'ja' },
+export const LANGUAGE_OPTIONS = [
+  { value: 'ko', label: '한국어', htmlLang: 'ko' },
+  { value: 'en', label: 'English', htmlLang: 'en' },
+  { value: 'zh', label: '中文', htmlLang: 'zh-CN' },
+  { value: 'tw', label: '台語', htmlLang: 'zh-TW' },
+  { value: 'ja', label: '日本語', htmlLang: 'ja' },
 ] as const
 
-export type LanguageCode = (typeof LANGUAGES)[number]['code']
+export type LanguageCode = (typeof LANGUAGE_OPTIONS)[number]['value']
 
 export const DEFAULT_LANGUAGE: LanguageCode = 'ko'
 
@@ -51,7 +51,20 @@ const en: TranslationMap = {
   '임대차 / 매매 계약서': 'Lease / purchase contract',
   '등기부등본 업로드': 'Upload registry record',
   '권리관계 확인 서류': 'Ownership-rights document',
+  '계약서 언어': 'Contract language',
+  '계약서 원본 언어 선택': 'Select original contract language',
+  '등기부등본 언어': 'Registry document language',
+  '등기부등본 원본 언어 선택': 'Select original registry language',
+  '계약서 파일이 업로드되었습니다. 계약서 원본 언어를 선택해주세요.':
+    'A contract file has been uploaded. Please select the original contract language.',
+  '등기부등본 파일이 업로드되었습니다. 등기부등본 원본 언어를 선택해주세요.':
+    'A registry document has been uploaded. Please select the original registry language.',
   'AI 위험 진단 시작': 'Start AI risk diagnosis',
+  '문서와 원본 언어를 함께 입력하면 더 정확한 AI 위험 진단을 받을 수 있어요.':
+    'Entering both the document and its original language helps AI diagnose risk more accurately.',
+  '문서 정보': 'Document information',
+  '계약서 언어:': 'Contract language:',
+  '등기부등본 언어:': 'Registry document language:',
   '이름': 'Name',
   '연락처 또는 이메일': 'Phone or email',
   '상담 받고 싶은 내용을 적어주세요 (계약 단계, 비자 유형 등)': 'Tell us what you need help with, such as contract stage or visa type',
@@ -213,6 +226,15 @@ const zh: TranslationMap = {
   '월세': '月租',
   '전세': '全租',
   '매매': '买卖',
+  '계약서 언어': '合同语言',
+  '계약서 원본 언어 선택': '选择合同原文语言',
+  '등기부등본 언어': '登记簿副本语言',
+  '등기부등본 원본 언어 선택': '选择登记簿副本原文语言',
+  '문서와 원본 언어를 함께 입력하면 더 정확한 AI 위험 진단을 받을 수 있어요.':
+    '同时输入文件和原文语言，可以获得更准确的 AI 风险诊断。',
+  '문서 정보': '文件信息',
+  '계약서 언어:': '合同语言：',
+  '등기부등본 언어:': '登记簿副本语言：',
   '핵심 기능': '核心功能',
   '이용 방법': '使用方法',
   '외같집 이용 방법': '外家集使用方法',
@@ -258,6 +280,15 @@ const tw: TranslationMap = {
   '월세': '月租',
   '전세': '全租',
   '매매': '買賣',
+  '계약서 언어': '合約語言',
+  '계약서 원본 언어 선택': '選擇合約原文語言',
+  '등기부등본 언어': '登記簿謄本語言',
+  '등기부등본 원본 언어 선택': '選擇登記簿謄本原文語言',
+  '문서와 원본 언어를 함께 입력하면 더 정확한 AI 위험 진단을 받을 수 있어요.':
+    '同時輸入文件與原文語言，可以獲得更準確的 AI 風險診斷。',
+  '문서 정보': '文件資訊',
+  '계약서 언어:': '合約語言：',
+  '등기부등본 언어:': '登記簿謄本語言：',
   '핵심 기능': '核心功能',
   '이용 방법': '使用方法',
   '다국어 지원': '多語言支援',
@@ -304,7 +335,13 @@ const ja: TranslationMap = {
   '매매': '売買',
   '계약서 업로드': '契約書をアップロード',
   '등기부등본 업로드': '登記簿謄本をアップロード',
+  '계약서 언어': '契約書の言語',
+  '계약서 원본 언어 선택': '契約書の原文言語を選択',
+  '등기부등본 언어': '登記簿謄本の言語',
+  '등기부등본 원본 언어 선택': '登記簿謄本の原文言語を選択',
   'AI 위험 진단 시작': 'AIリスク診断を開始',
+  '계약서 언어:': '契約書の言語：',
+  '등기부등본 언어:': '登記簿謄本の言語：',
   '핵심 기능': '主な機能',
   '이용 방법': '使い方',
   '외같집 이용 방법': '外カチプの使い方',
