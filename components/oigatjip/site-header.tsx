@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { type ChangeEvent, useState } from 'react'
 import Link from 'next/link'
-import { Check, ChevronDown, Globe, Menu, X } from 'lucide-react'
+import { ChevronDown, Globe, Menu, X } from 'lucide-react'
 import { Logo } from './logo'
 import { cn } from '@/lib/utils'
+import { LANGUAGES } from '@/lib/i18n'
+import { useLanguage } from './language-provider'
 
 const NAV = [
   { label: '서비스 소개', href: '/#features' },
@@ -14,12 +16,12 @@ const NAV = [
   { label: '커뮤니티', href: '/#community' },
 ]
 
-const LANGS = ['한국어', 'English', '中文', 'Tiếng Việt', '日本語']
-
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [langOpen, setLangOpen] = useState(false)
-  const [lang, setLang] = useState('한국어')
+  const { language, setLanguage } = useLanguage()
+  const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(event.target.value as typeof language)
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-white shadow-[0_10px_40px_oklch(0.2_0.075_258_/_0.05)]">
@@ -43,41 +45,23 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           {/* language dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setLangOpen((v) => !v)}
-              onBlur={() => setTimeout(() => setLangOpen(false), 120)}
-              className="flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-2 text-sm font-semibold text-navy shadow-sm transition-colors hover:bg-secondary"
-              aria-haspopup="listbox"
-              aria-expanded={langOpen}
+          <div className="relative flex items-center rounded-full border border-border bg-white px-3 py-2 text-sm font-semibold text-navy shadow-sm transition-colors hover:bg-secondary">
+            <Globe className="pointer-events-none h-4 w-4 text-primary" />
+            <select
+              value={language}
+              onChange={handleLanguageChange}
+              onInput={handleLanguageChange}
+              className="ml-1.5 appearance-none bg-transparent pr-5 text-sm font-semibold text-navy outline-none"
+              aria-label="언어 선택"
+              data-language-select
             >
-              <Globe className="h-4 w-4 text-primary" />
-              <span className="hidden sm:inline">{lang}</span>
-              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-            </button>
-            {langOpen && (
-              <ul
-                className="absolute right-0 top-full z-50 mt-2 w-40 overflow-hidden rounded-2xl border border-border bg-popover p-1.5 shadow-xl"
-                role="listbox"
-              >
-                {LANGS.map((l) => (
-                  <li key={l}>
-                    <button
-                      type="button"
-                      onMouseDown={() => {
-                        setLang(l)
-                        setLangOpen(false)
-                      }}
-                      className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm font-medium text-popover-foreground hover:bg-secondary"
-                    >
-                      {l}
-                      {l === lang && <Check className="h-4 w-4 text-primary" />}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
+              {LANGUAGES.map((item) => (
+                <option key={item.code} value={item.code}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-2.5 h-3.5 w-3.5 text-muted-foreground" />
           </div>
 
           {/* auth buttons (desktop) */}
